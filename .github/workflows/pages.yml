@@ -1,0 +1,47 @@
+name: Publish Radar de Compras
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Assemble static website
+        run: |
+          mkdir -p public
+          cat site-source/site-bundle.part*.b64 | base64 --decode > /tmp/radar-site.tar.gz
+          tar -xzf /tmp/radar-site.tar.gz -C public
+          touch public/.nojekyll
+          test -s public/index.html
+          test -s public/sitemap.xml
+          test -d public/guias
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

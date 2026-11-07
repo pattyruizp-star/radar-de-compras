@@ -9,12 +9,18 @@ Sitio editorial estático en español, adaptable a móviles y preparado para Git
 - Diseño adaptable, logotipo vectorial, favicon, sitemap y robots.txt.
 - No contiene enlaces comerciales ni enlaces de afiliado ficticios.
 
-## Publicación
-El repositorio es `pattyruizp-star/radar-de-compras`. En GitHub abre **Settings → Pages** y selecciona **Deploy from a branch**, rama `main` y carpeta `/ (root)`. Guarda los cambios. La dirección prevista es:
+## Publicación con GitHub Pages
+El repositorio es `pattyruizp-star/radar-de-compras`. El sitio se extrae desde `site-source/` y se publica mediante el workflow `.github/workflows/pages.yml`.
 
-https://pattyruizp-star.github.io/radar-de-compras/
+1. Abre **Settings → Pages**.
+2. En **Build and deployment → Source**, selecciona **GitHub Actions** y guarda.
+3. Abre **Actions → Publish Radar de Compras**.
+4. Selecciona **Run workflow** y confirma **Run workflow** en la rama `main`.
+5. Cuando el flujo termine correctamente, la dirección del sitio será:
 
-La publicación puede tardar unos minutos después de activar Pages.
+   https://pattyruizp-star.github.io/radar-de-compras/
+
+GitHub indica que el sitio puede tardar unos minutos en quedar visible después del despliegue.
 
 ## Antes de solicitar Amazon Associates
 - Confirma que todas las páginas están disponibles públicamente y revisa cada guía.
@@ -25,4 +31,4 @@ La publicación puede tardar unos minutos después de activar Pages.
 - Comprueba las condiciones vigentes para el país y mercado al que solicites ingresar.
 
 ## Edición
-Las guías se encuentran en `guias/`; los colores y estilos en `styles.css`; los símbolos en `logo.svg` y `favicon.svg`. Puedes editar los archivos con cualquier editor de texto.
+El paquete del sitio está guardado en partes Base64 dentro de `site-source/` y se extrae automáticamente durante la publicación. Para editar el contenido, es más práctico trabajar con el ZIP de origen, actualizarlo y volver a cargar el paquete. Los archivos de la web incluyen `index.html`, `styles.css`, `script.js`, las diez guías y las páginas informativas.

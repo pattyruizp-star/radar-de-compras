@@ -47,6 +47,28 @@ jobs:
               )
               if page.parent.name == "guias":
                   html = html.replace('<script src="script.js"></script>', '<script src="../script.js"></script>')
+                  visuales = [
+                      (["auricular", "audifono", "audífono", "headphone"], "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1400&q=82", "Auriculares inalámbricos"),
+                      (["bateria externa", "batería externa", "power bank", "cargador portatil", "cargador portátil"], "https://images.unsplash.com/photo-1725085815038-279c8139c8a4?auto=format&fit=crop&w=1400&q=82", "Batería externa portátil"),
+                      (["ssd", "almacenamiento externo", "disco externo"], "https://images.unsplash.com/photo-1725085815038-279c8139c8a4?auto=format&fit=crop&w=1400&q=82", "Unidad SSD externa"),
+                      (["freidora", "air fryer"], "https://www.lidl.it/static/assets/WON_Inline_Teaser_Right_Aligned_Return_KuecheXS-2069027.jpg", "Freidora de aire en una cocina"),
+                      (["licuadora", "blender"], "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=1400&q=82", "Licuadora de cocina"),
+                      (["enchufe inteligente", "smart plug", "enchufe wifi"], "https://garza.es/cdn/shop/files/401262C_3A.jpg?v=1772651820&width=1200", "Enchufe inteligente"),
+                      (["silla ergonomica", "silla ergonómica", "silla de oficina"], "https://www.axenergonomics.com.au/cdn/shop/files/Gemini_Generated_Image_f0kf3pf0kf3pf0kf.png?crop=center&height=1200&v=1761803675&width=1200", "Silla ergonómica de oficina"),
+                      (["lampara", "lámpara", "iluminacion de escritorio", "iluminación de escritorio"], "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1400&q=82", "Lámpara de escritorio"),
+                      (["webcam", "camara web", "cámara web"], "https://www.jlab.com/cdn/shop/files/JBudsWorkLine-01233-02010-FOCUS-ON-YOU-min_e4228a1f-a36b-40d1-9592-c100030719f7.jpg?v=1746567592&width=1400", "Webcam para videollamadas"),
+                      (["mochila", "equipaje de mano", "viaje"], "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1400&q=82", "Mochila de viaje")
+                  ]
+                  low = html.lower()
+                  for keys, src, alt in visuales:
+                      if any(k in low for k in keys):
+                          hero = (f'<figure class="guide-visual"><img src="{src}" alt="{alt}" loading="lazy" width="1200" height="760">'
+                                  f'<figcaption>{alt} · Imagen ilustrativa</figcaption></figure>')
+                          html = re.sub(r'(</h1>)', r'\1' + hero, html, count=1, flags=re.I)
+                          break
+              if re.search(r"quienes somos|quiénes somos|sobre nosotros", html, re.I):
+                  html = html.replace("</main>", '<div class="about-brand"><img src="assets/logo-cuadrado.svg" alt="Logo RADAR DE COMPRAS"></div></main>', 1)
+              html = html.replace("</head>", '<link rel="icon" type="image/svg+xml" href="' + asset_prefix + 'logo-circular.svg"></head>', 1)
               if page.name == "index.html":
                   banner = ('<div class="brand-cover-wrap wrap"><img class="brand-cover" src="assets/banner-portada.webp" '
                             'alt="RADAR DE COMPRAS: tu guía de compras inteligentes. Descubre, compara y aprovecha." '
@@ -61,6 +83,12 @@ jobs:
           PY
           cat >> public/styles.css <<'CSS'
           .brand-logo{display:block;width:230px;height:auto;max-height:78px;object-fit:contain;flex:none}
+          .guide-visual{margin:18px 0 28px;border-radius:20px;overflow:hidden;background:#eef2f7}
+          .guide-visual img{display:block;width:100%;max-height:460px;object-fit:cover;aspect-ratio:16/9}
+          .guide-visual figcaption{padding:8px 13px;font-size:.78rem;color:#667085;background:#f5f7fa}
+          .about-brand{max-width:250px;margin:28px auto;text-align:center}
+          .about-brand img{display:block;width:100%;height:auto}
+          @media(max-width:650px){.guide-visual{margin:14px 0 22px;border-radius:14px}.guide-visual img{aspect-ratio:4/3}}
           .footer .brand-logo{width:260px;max-height:none}
           .footer a.brand{display:inline-flex;padding:0}
           .brand-cover-wrap{margin-top:24px;margin-bottom:0}

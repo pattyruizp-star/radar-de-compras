@@ -47,25 +47,32 @@ jobs:
               )
               if page.parent.name == "guias":
                   html = html.replace('<script src="script.js"></script>', '<script src="../script.js"></script>')
+                  # Elegir imagen usando SOLO el título H1 de esta guía.
+                  # No buscar en todo el HTML: navegación y enlaces relacionados
+                  # incluyen términos de otras guías y causaban falsos emparejamientos.
+                  match = re.search(r'<h1[^>]*>(.*?)</h1>', html, re.S | re.I)
+                  title = re.sub(r'<[^>]+>', ' ', match.group(1) if match else '')
+                  title = re.sub(r'&[^;]+;', ' ', title).lower()
                   visuales = [
-                      (["auricular", "audifono", "audífono", "headphone"], "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1400&q=82", "Auriculares inalámbricos"),
-                      (["bateria externa", "batería externa", "power bank", "cargador portatil", "cargador portátil"], "https://images.unsplash.com/photo-1725085815038-279c8139c8a4?auto=format&fit=crop&w=1400&q=82", "Batería externa portátil"),
-                      (["ssd", "almacenamiento externo", "disco externo"], "https://images.unsplash.com/photo-1725085815038-279c8139c8a4?auto=format&fit=crop&w=1400&q=82", "Unidad SSD externa"),
-                      (["freidora", "air fryer"], "https://www.lidl.it/static/assets/WON_Inline_Teaser_Right_Aligned_Return_KuecheXS-2069027.jpg", "Freidora de aire en una cocina"),
-                      (["licuadora", "blender"], "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=1400&q=82", "Licuadora de cocina"),
-                      (["enchufe inteligente", "smart plug", "enchufe wifi"], "https://garza.es/cdn/shop/files/401262C_3A.jpg?v=1772651820&width=1200", "Enchufe inteligente"),
-                      (["silla ergonomica", "silla ergonómica", "silla de oficina"], "https://www.axenergonomics.com.au/cdn/shop/files/Gemini_Generated_Image_f0kf3pf0kf3pf0kf.png?crop=center&height=1200&v=1761803675&width=1200", "Silla ergonómica de oficina"),
-                      (["lampara", "lámpara", "iluminacion de escritorio", "iluminación de escritorio"], "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1400&q=82", "Lámpara de escritorio"),
-                      (["webcam", "camara web", "cámara web"], "https://www.jlab.com/cdn/shop/files/JBudsWorkLine-01233-02010-FOCUS-ON-YOU-min_e4228a1f-a36b-40d1-9592-c100030719f7.jpg?v=1746567592&width=1400", "Webcam para videollamadas"),
-                      (["mochila", "equipaje de mano", "viaje"], "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1400&q=82", "Mochila de viaje")
+                      (["bateria externa", "batería externa", "power bank"], "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=1400&q=85", "Batería externa portátil"),
+                      (["auricular", "audifono", "audífono", "headphone"], "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1400&q=85", "Auriculares inalámbricos"),
+                      (["ssd", "almacenamiento externo", "disco externo"], "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=1400&q=85", "Unidad SSD externa"),
+                      (["freidora", "air fryer"], "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=1400&q=85", "Freidora de aire"),
+                      (["licuadora", "blender"], "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=1400&q=85", "Licuadora de cocina"),
+                      (["enchufe inteligente", "smart plug", "enchufe wifi"], "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1400&q=85", "Enchufe inteligente"),
+                      (["silla ergonomica", "silla ergonómica", "silla de oficina"], "https://images.unsplash.com/photo-1505843490701-5be5d6b4f5a2?auto=format&fit=crop&w=1400&q=85", "Silla ergonómica de oficina"),
+                      (["lampara", "lámpara", "iluminacion de escritorio", "iluminación de escritorio"], "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1400&q=85", "Lámpara de escritorio"),
+                      (["webcam", "camara web", "cámara web"], "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?auto=format&fit=crop&w=1400&q=85", "Cámara web para videollamadas"),
+                      (["mochila", "equipaje de mano", "viaje"], "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1400&q=85", "Mochila de viaje")
                   ]
-                  low = html.lower()
-                  for keys, src, alt in visuales:
-                      if any(k in low for k in keys):
-                          hero = (f'<figure class="guide-visual"><img src="{src}" alt="{alt}" loading="lazy" width="1200" height="760">'
-                                  f'<figcaption>{alt} · Imagen ilustrativa</figcaption></figure>')
-                          html = re.sub(r'(</h1>)', r'\1' + hero, html, count=1, flags=re.I)
-                          break
+                  selected = next(((src, alt) for keys, src, alt in visuales if any(k in title for k in keys)), None)
+                  if selected:
+                      src, alt = selected
+                      hero = (f'<figure class="guide-visual"><img src="{src}" alt="{alt}" loading="eager" width="1200" height="760">'
+                              f'<figcaption>{alt} · Imagen ilustrativa</figcaption></figure>')
+                      html = re.sub(r'(</h1>)', lambda m: m.group(1) + hero, html, count=1, flags=re.I)
+                  else:
+                      print(f"WARNING: no se encontró imagen específica para {page.name}: {title}")
               if page.name in {"quienes-somos.html", "sobre-nosotros.html", "nosotros.html"}:
                   html = html.replace("</main>", '<div class="about-brand"><img src="assets/logo-cuadrado.svg" alt="Logo RADAR DE COMPRAS"></div></main>', 1)
               html = html.replace("</head>", '<link rel="icon" type="image/svg+xml" href="' + asset_prefix + 'logo-circular.svg"></head>', 1)

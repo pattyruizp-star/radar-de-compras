@@ -137,6 +137,23 @@ jobs:
                       '<meta property="og:type" content="website"><meta property="og:image" content="https://pattyruizp-star.github.io/radar-de-compras/assets/banner-portada.webp"><meta name="twitter:card" content="summary_large_image">',
                       1
                   )
+              if page.name == "index.html":
+                  # Dar una entrada visual a la categoría Tecnología / energía portátil
+                  # dentro de la biblioteca editorial, sin alterar el texto ni los enlaces.
+                  tech_visual = (
+                      '<div class="category-visual category-tech">'
+                      '<img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=1200&q=85" alt="Tecnología y dispositivos electrónicos" loading="lazy">'
+                      '<img src="https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=1200&q=85" alt="Energía portátil y batería externa" loading="lazy">'
+                      '<img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=85" alt="Accesorios y espacio de trabajo tecnológico" loading="lazy">'
+                      '</div>'
+                  )
+                  html, count = re.subn(
+                      r'(<h[23][^>]*>[^<]*(?:Tecnología\\s*/\\s*energía portátil|Tecnologia\\s*/\\s*energia portatil)[^<]*</h[23]>)',
+                      lambda m: m.group(1) + tech_visual,
+                      html, count=1, flags=re.I
+                  )
+                  if count == 0:
+                      print("INFO: no se encontró el encabezado exacto de Tecnología / energía portátil")
               page.write_text(html, encoding="utf-8")
           PY
           cat >> public/styles.css <<'CSS'
@@ -147,6 +164,10 @@ jobs:
           .guide-visual.collage-3 img:first-child{grid-column:1/-1;height:340px}
           .guide-visual.collage-3 img:not(:first-child){height:210px}
           .guide-visual figcaption{grid-column:1/-1;padding:9px 13px;font-size:.78rem;color:#667085;background:#f5f7fa}
+          .category-visual{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:10px;margin:16px 0 22px;border-radius:16px;overflow:hidden}
+          .category-visual img{display:block;width:100%;height:150px;object-fit:cover;background:#eef2f7}
+          .category-visual img:first-child{height:190px}
+          @media(max-width:650px){.category-visual{grid-template-columns:1fr 1fr;gap:7px}.category-visual img,.category-visual img:first-child{height:125px}.category-visual img:first-child{grid-column:1/-1;height:165px}}
           .about-brand{max-width:250px;margin:28px auto;text-align:center}
           .about-brand img{display:block;width:100%;height:auto}
           @media(max-width:650px){.guide-visual{margin:14px 0 22px;border-radius:14px}.guide-visual img{height:160px}.guide-visual.collage-2 img{height:190px}.guide-visual.collage-3 img:first-child{height:220px}.guide-visual.collage-3 img:not(:first-child){height:140px}}

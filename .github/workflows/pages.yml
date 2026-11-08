@@ -66,7 +66,7 @@ jobs:
                                   f'<figcaption>{alt} · Imagen ilustrativa</figcaption></figure>')
                           html = re.sub(r'(</h1>)', r'\1' + hero, html, count=1, flags=re.I)
                           break
-              if re.search(r"quienes somos|quiénes somos|sobre nosotros", html, re.I):
+              if page.name in {"quienes-somos.html", "sobre-nosotros.html", "nosotros.html"}:
                   html = html.replace("</main>", '<div class="about-brand"><img src="assets/logo-cuadrado.svg" alt="Logo RADAR DE COMPRAS"></div></main>', 1)
               html = html.replace("</head>", '<link rel="icon" type="image/svg+xml" href="' + asset_prefix + 'logo-circular.svg"></head>', 1)
               if page.name == "index.html":

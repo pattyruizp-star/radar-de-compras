@@ -57,7 +57,6 @@ jobs:
                       (["bateria externa", "batería externa", "power bank"], [
                           ("https://media-www.canadiantire.ca/product/automotive/car-care-accessories/auto-electronics/0355545/bluehive-carbon-fiber-20-000-mah-power-bank-140935ff-bee3-4223-a8f4-4ee66ce7e583.png?imdensity=1&impolicy=gZoom&imwidth=640", "Batería externa conectada a un teléfono"),
                           ("https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=1000&q=85", "Cargador portátil compacto"),
-                          ("https://images.unsplash.com/photo-1609592424833-3c1b5b8b4d7c?auto=format&fit=crop&w=1000&q=85", "Accesorios de carga portátil")
                       ]),
                       (["auricular", "audifono", "audífono", "headphone"], [
                           ("https://res1.x-kom.de/AllegroIMG/PRODUCENCI/CREATIVE/51EF1140AA000/creative-sluchawki-bezprzewodowe-zen-hybrid-2-lifestyle-01.jpg", "Auriculares inalámbricos en uso"),
@@ -70,8 +69,7 @@ jobs:
                       ]),
                       (["freidora", "air fryer"], [
                           ("https://www.magnaretail.co.uk/cdn/shop/collections/Air_Fryer_Collection.jpg?v=1749716531", "Freidora de aire con cesta abierta y alimentos"),
-                          ("https://catracalivre.com.br/i/q8jkVn4a0Ols9b656PvbrMSYYhxQyklRnVq6QdoFhqc/rs%3Afill%3A1200%3A630%3A1/g%3Asm/q%3A80/bG9jYWw6Ly8vMjAyNi8wNy9haXItZnJ5ZXIt d2l0aC1mcmVuY2gtZnJpZXMtMS5qcGVn", "Cesta de freidora de aire con papas"),
-                          ("https://www.blackanddecker.ae/media/catalog/product/cache/1/image/1200x/9df78eab33525d08d6e5fb8d27136e95/a/f/af5539-b5_1.jpg", "Freidora de aire digital de cocina")
+                          ("https://catracalivre.com.br/i/q8jkVn4a0Ols9b656PvbrMSYYhxQyklRnVq6QdoFhqc/rs%3Afill%3A1200%3A630%3A1/g%3Asm/q%3A80/bG9jYWw6Ly8vMjAyNi8wNy9haXItZnJ5ZXItd2l0aC1mcmVuY2gtZnJpZXMtMS5qcGVn", "Cesta de freidora de aire con papas"),
                       ]),
                       (["licuadora", "blender"], [
                           ("https://product-hub-prd.madeiramadeira.com.br/816967722/images/145d8094-2102-4004-a85c-3449ed0b8b964eafaed9362e2b9a39e1EBS302.jpg", "Licuadora de vaso con frutas"),

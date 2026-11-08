@@ -54,22 +54,60 @@ jobs:
                   title = re.sub(r'<[^>]+>', ' ', match.group(1) if match else '')
                   title = re.sub(r'&[^;]+;', ' ', title).lower()
                   visuales = [
-                      (["bateria externa", "batería externa", "power bank"], "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=1400&q=85", "Batería externa portátil"),
-                      (["auricular", "audifono", "audífono", "headphone"], "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1400&q=85", "Auriculares inalámbricos"),
-                      (["ssd", "almacenamiento externo", "disco externo"], "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=1400&q=85", "Unidad SSD externa"),
-                      (["freidora", "air fryer"], "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=1400&q=85", "Freidora de aire"),
-                      (["licuadora", "blender"], "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=1400&q=85", "Licuadora de cocina"),
-                      (["enchufe inteligente", "smart plug", "enchufe wifi"], "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1400&q=85", "Enchufe inteligente"),
-                      (["silla ergonomica", "silla ergonómica", "silla de oficina"], "https://images.unsplash.com/photo-1505843490701-5be5d6b4f5a2?auto=format&fit=crop&w=1400&q=85", "Silla ergonómica de oficina"),
-                      (["lampara", "lámpara", "iluminacion de escritorio", "iluminación de escritorio"], "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1400&q=85", "Lámpara de escritorio"),
-                      (["webcam", "camara web", "cámara web"], "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?auto=format&fit=crop&w=1400&q=85", "Cámara web para videollamadas"),
-                      (["mochila", "equipaje de mano", "viaje"], "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1400&q=85", "Mochila de viaje")
+                      (["bateria externa", "batería externa", "power bank"], [
+                          ("https://media-www.canadiantire.ca/product/automotive/car-care-accessories/auto-electronics/0355545/bluehive-carbon-fiber-20-000-mah-power-bank-140935ff-bee3-4223-a8f4-4ee66ce7e583.png?imdensity=1&impolicy=gZoom&imwidth=640", "Batería externa conectada a un teléfono"),
+                          ("https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=1000&q=85", "Cargador portátil compacto"),
+                          ("https://images.unsplash.com/photo-1609592424833-3c1b5b8b4d7c?auto=format&fit=crop&w=1000&q=85", "Accesorios de carga portátil")
+                      ]),
+                      (["auricular", "audifono", "audífono", "headphone"], [
+                          ("https://res1.x-kom.de/AllegroIMG/PRODUCENCI/CREATIVE/51EF1140AA000/creative-sluchawki-bezprzewodowe-zen-hybrid-2-lifestyle-01.jpg", "Auriculares inalámbricos en uso"),
+                          ("https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=85", "Auriculares de diadema")
+                      ]),
+                      (["ssd", "almacenamiento externo", "disco externo"], [
+                          ("https://img.evetech.co.za/repository/ProductImages/adata-se880-4tb-ssd-og-image-1200px-v1.jpeg", "Unidad SSD externa portátil"),
+                          ("https://img.evetech.co.za/repository/ez/reviving-an-old-laptop-using-external-ssds-for-fas-banner.webp", "SSD externo conectado a una laptop"),
+                          ("https://www.pakdukaan.pk/cdn/shop/files/Transcend-ESD265C-USB-3.2-Gen-2-Portable-External-SSD-Price-in-Pakistan-PakDukaan-1.jpg?v=1767693261", "SSD portátil conectado para transferir archivos")
+                      ]),
+                      (["freidora", "air fryer"], [
+                          ("https://www.magnaretail.co.uk/cdn/shop/collections/Air_Fryer_Collection.jpg?v=1749716531", "Freidora de aire con cesta abierta y alimentos"),
+                          ("https://catracalivre.com.br/i/q8jkVn4a0Ols9b656PvbrMSYYhxQyklRnVq6QdoFhqc/rs%3Afill%3A1200%3A630%3A1/g%3Asm/q%3A80/bG9jYWw6Ly8vMjAyNi8wNy9haXItZnJ5ZXIt d2l0aC1mcmVuY2gtZnJpZXMtMS5qcGVn", "Cesta de freidora de aire con papas"),
+                          ("https://www.blackanddecker.ae/media/catalog/product/cache/1/image/1200x/9df78eab33525d08d6e5fb8d27136e95/a/f/af5539-b5_1.jpg", "Freidora de aire digital de cocina")
+                      ]),
+                      (["licuadora", "blender"], [
+                          ("https://product-hub-prd.madeiramadeira.com.br/816967722/images/145d8094-2102-4004-a85c-3449ed0b8b964eafaed9362e2b9a39e1EBS302.jpg", "Licuadora de vaso con frutas"),
+                          ("https://cdn.karaca.com/rcman/cw695h695q90gm/image/000001000257873001/emsan-multiblend-smoothie-blender-grey-1000w-000001000257873001-5.jpg", "Licuadora preparando smoothies"),
+                          ("https://cdn11.bigcommerce.com/s-5vfc75n1yv/images/stencil/600x600/products/8042/91756/o6fxytjrv2f55bukw4mx__76063.1769013119.jpg?c=1", "Licuadora vertiendo un batido")
+                      ]),
+                      (["enchufe inteligente", "smart plug", "enchufe wifi"], [
+                          ("https://www.ikea.com/us/en/images/products/tretakt-plug-smart__1297331_pe935886_s5.jpg?f=xl", "Enchufe inteligente conectado en casa"),
+                          ("https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1000&q=85", "Control inteligente del hogar")
+                      ]),
+                      (["silla ergonomica", "silla ergonómica", "silla de oficina"], [
+                          ("https://images.unsplash.com/photo-1505843490701-5be5d6b4f5a2?auto=format&fit=crop&w=1000&q=85", "Silla ergonómica de oficina"),
+                          ("https://images.unsplash.com/photo-1596079890744-c1a0462d0975?auto=format&fit=crop&w=1000&q=85", "Espacio de trabajo con silla")
+                      ]),
+                      (["lampara", "lámpara", "iluminacion de escritorio", "iluminación de escritorio"], [
+                          ("https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85", "Lámpara de escritorio encendida"),
+                          ("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=85", "Escritorio de trabajo iluminado")
+                      ]),
+                      (["webcam", "camara web", "cámara web"], [
+                          ("https://www.segment.com.tr/images/productimages/SC_HD03_05.jpg", "Cámara web sobre monitor en videollamada"),
+                          ("https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?auto=format&fit=crop&w=1000&q=85", "Equipo de videollamada en escritorio")
+                      ]),
+                      (["mochila", "equipaje de mano", "viaje"], [
+                          ("https://titantrekstore.com/cdn/shop/articles/684aa8005559d477e754ac14-1749726155464_17284d18-cd7f-46c4-ada6-a923a5148b6f.jpg?v=1750922005", "Mochila de viaje abierta y organizada"),
+                          ("https://f.fcdn.app/imgs/e48439/mispetates.com/mipeuy/cac3/original/catalogo/SET.VIAJENEGRO_SC_4/1500-1500/set-de-viaje-valija-carry-on-ri-gida-mochila-expandible-sc.jpg", "Mochila y maleta de mano en aeropuerto"),
+                          ("https://umnotravel.com/_next/image?q=100&url=https%3A%2F%2Fumnotravel.com%2Fapi%2Fmedia%2Ffile%2Ftravel-carry-on-packing-1200x630-1.jpg%3F2025-12-24T08%253A17%253A03.316Z&w=2048", "Equipaje organizado para un viaje")
+                      ])
                   ]
-                  selected = next(((src, alt) for keys, src, alt in visuales if any(k in title for k in keys)), None)
+                  selected = next((photos for keys, photos in visuales if any(k in title for k in keys)), None)
                   if selected:
-                      src, alt = selected
-                      hero = (f'<figure class="guide-visual"><img src="{src}" alt="{alt}" loading="eager" width="1200" height="760">'
-                              f'<figcaption>{alt} · Imagen ilustrativa</figcaption></figure>')
+                      cards = ''.join(
+                          f'<img src="{src}" alt="{alt}" loading="eager" width="900" height="650">'
+                          for src, alt in selected
+                      )
+                      hero = (f'<figure class="guide-visual collage collage-{len(selected)}">{cards}'
+                              f'<figcaption>Imágenes ilustrativas relacionadas con esta guía</figcaption></figure>')
                       html = re.sub(r'(</h1>)', lambda m: m.group(1) + hero, html, count=1, flags=re.I)
                   else:
                       print(f"WARNING: no se encontró imagen específica para {page.name}: {title}")
@@ -90,12 +128,14 @@ jobs:
           PY
           cat >> public/styles.css <<'CSS'
           .brand-logo{display:block;width:230px;height:auto;max-height:78px;object-fit:contain;flex:none}
-          .guide-visual{margin:18px 0 28px;border-radius:20px;overflow:hidden;background:#eef2f7}
-          .guide-visual img{display:block;width:100%;max-height:460px;object-fit:cover;aspect-ratio:16/9}
-          .guide-visual figcaption{padding:8px 13px;font-size:.78rem;color:#667085;background:#f5f7fa}
+          .guide-visual{margin:18px 0 28px;border-radius:20px;overflow:hidden;background:#eef2f7;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+          .guide-visual img{display:block;width:100%;height:230px;object-fit:cover;background:#e9edf2}
+          .guide-visual.collage-2 img:first-child{grid-column:1/-1;height:340px}
+          .guide-visual.collage-3 img:first-child{grid-column:1/-1;height:340px}
+          .guide-visual figcaption{grid-column:1/-1;padding:9px 13px;font-size:.78rem;color:#667085;background:#f5f7fa}
           .about-brand{max-width:250px;margin:28px auto;text-align:center}
           .about-brand img{display:block;width:100%;height:auto}
-          @media(max-width:650px){.guide-visual{margin:14px 0 22px;border-radius:14px}.guide-visual img{aspect-ratio:4/3}}
+          @media(max-width:650px){.guide-visual{margin:14px 0 22px;border-radius:14px}.guide-visual img{height:150px}.guide-visual.collage-2 img:first-child,.guide-visual.collage-3 img:first-child{height:220px}}
           .footer .brand-logo{width:260px;max-height:none}
           .footer a.brand{display:inline-flex;padding:0}
           .brand-cover-wrap{margin-top:24px;margin-bottom:0}

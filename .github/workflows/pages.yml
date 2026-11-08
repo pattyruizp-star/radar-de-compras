@@ -100,8 +100,23 @@ jobs:
                   ]
                   selected = next((photos for keys, photos in visuales if any(k in title for k in keys)), None)
                   if selected:
+                      # Fallback por tema para evitar huecos si un servidor externo falla.
+                      fallbacks = {
+                          "bateria": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=1200&q=85",
+                          "auricular": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=85",
+                          "ssd": "https://images.unsplash.com/photo-1597872250969-2b5a3f5a1e7a?auto=format&fit=crop&w=1200&q=85",
+                          "freidora": "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=1200&q=85",
+                          "licuadora": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=1200&q=85",
+                          "enchufe": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1200&q=85",
+                          "silla": "https://images.unsplash.com/photo-1505843490701-5be5d6b4f5a2?auto=format&fit=crop&w=1200&q=85",
+                          "lampara": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1200&q=85",
+                          "webcam": "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?auto=format&fit=crop&w=1200&q=85",
+                          "viaje": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1200&q=85"
+                      }
+                      fallback_key = next((key for key in fallbacks if key in title or (key == "lampara" and "lámpara" in title)), "ssd")
+                      fallback = fallbacks[fallback_key]
                       cards = ''.join(
-                          f'<img src="{src}" alt="{alt}" loading="eager" width="900" height="650">'
+                          f'<img src="{src}" data-fallback="{fallback}" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="{alt}" loading="eager" width="900" height="650">'
                           for src, alt in selected
                       )
                       hero = (f'<figure class="guide-visual collage collage-{len(selected)}">{cards}'
@@ -126,14 +141,15 @@ jobs:
           PY
           cat >> public/styles.css <<'CSS'
           .brand-logo{display:block;width:230px;height:auto;max-height:78px;object-fit:contain;flex:none}
-          .guide-visual{margin:18px 0 28px;border-radius:20px;overflow:hidden;background:#eef2f7;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
-          .guide-visual img{display:block;width:100%;height:230px;object-fit:cover;background:#e9edf2}
-          .guide-visual.collage-2 img:first-child{grid-column:1/-1;height:340px}
+          .guide-visual{margin:18px 0 28px;border-radius:20px;overflow:hidden;background:#eef2f7;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+          .guide-visual img{display:block;width:100%;height:245px;object-fit:cover;background:#e9edf2;min-width:0}
+          .guide-visual.collage-2 img{grid-column:auto;height:300px}
           .guide-visual.collage-3 img:first-child{grid-column:1/-1;height:340px}
+          .guide-visual.collage-3 img:not(:first-child){height:210px}
           .guide-visual figcaption{grid-column:1/-1;padding:9px 13px;font-size:.78rem;color:#667085;background:#f5f7fa}
           .about-brand{max-width:250px;margin:28px auto;text-align:center}
           .about-brand img{display:block;width:100%;height:auto}
-          @media(max-width:650px){.guide-visual{margin:14px 0 22px;border-radius:14px}.guide-visual img{height:150px}.guide-visual.collage-2 img:first-child,.guide-visual.collage-3 img:first-child{height:220px}}
+          @media(max-width:650px){.guide-visual{margin:14px 0 22px;border-radius:14px}.guide-visual img{height:160px}.guide-visual.collage-2 img{height:190px}.guide-visual.collage-3 img:first-child{height:220px}.guide-visual.collage-3 img:not(:first-child){height:140px}}
           .footer .brand-logo{width:260px;max-height:none}
           .footer a.brand{display:inline-flex;padding:0}
           .brand-cover-wrap{margin-top:24px;margin-bottom:0}

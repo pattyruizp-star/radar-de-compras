@@ -154,9 +154,70 @@ jobs:
                   )
                   if count == 0:
                       print("INFO: no se encontró el encabezado exacto de Tecnología / energía portátil")
+              if page.name == "index.html":
+                  # Tarjetas editoriales: imagen real primero, contenido después.
+                  visual_cards = [
+                      (["bateria", "power-bank"], "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=1000&q=85", "Batería externa y energía portátil"),
+                      (["auricular", "audifono", "audífono"], "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=85", "Auriculares inalámbricos"),
+                      (["silla-ergonomica", "silla-ergon"], "https://images.unsplash.com/photo-1505843490701-5be5d6b4f5a2?auto=format&fit=crop&w=1000&q=85", "Silla ergonómica de oficina"),
+                      (["lampara", "lámpara"], "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85", "Lámpara de escritorio"),
+                      (["freidora", "air-fryer"], "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=1000&q=85", "Freidora de aire"),
+                      (["licuadora"], "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=1000&q=85", "Licuadora de cocina"),
+                      (["ssd", "almacenamiento"], "https://images.unsplash.com/photo-1597872250969-2b5a3f5a1e7a?auto=format&fit=crop&w=1000&q=85", "Almacenamiento externo SSD"),
+                      (["mochila", "viaje"], "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1000&q=85", "Mochila y equipaje de viaje"),
+                      (["webcam", "camara-web", "cámara-web"], "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?auto=format&fit=crop&w=1000&q=85", "Cámara web para videollamadas")
+                  ]
+                  visual_script = """<script>
+          document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('a[href*="guias/"]').forEach(function(link) {
+              var href = (link.getAttribute('href') || '').toLowerCase();
+              var title = (link.textContent || '').toLowerCase();
+              var key = href + ' ' + title;
+              var data = [
+                [['bateria','power-bank'], 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=1000&q=85', 'Energía portátil'],
+                [['auricular','audifono','audífono'], 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=85', 'Audio personal'],
+                [['silla-ergonomica','silla-ergon'], 'https://images.unsplash.com/photo-1505843490701-5be5d6b4f5a2?auto=format&fit=crop&w=1000&q=85', 'Oficina y estudio'],
+                [['lampara','lámpara'], 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85', 'Iluminación'],
+                [['freidora','air-fryer'], 'https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=1000&q=85', 'Cocina práctica'],
+                [['licuadora'], 'https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=1000&q=85', 'Pequeños electrodomésticos'],
+                [['ssd','almacenamiento'], 'https://images.unsplash.com/photo-1597872250969-2b5a3f5a1e7a?auto=format&fit=crop&w=1000&q=85', 'Almacenamiento'],
+                [['mochila','viaje'], 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1000&q=85', 'Viajes'],
+                [['webcam','camara-web','cámara-web'], 'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?auto=format&fit=crop&w=1000&q=85', 'Videollamadas']
+              ];
+              var item = data.find(function(row){ return row[0].some(function(k){return key.indexOf(k)!==-1;}); });
+              if (!item) return;
+              var card = link.closest('article, .guide-card, .card, li') || link.parentElement;
+              if (!card || card.querySelector('.radar-card-photo')) return;
+              card.classList.add('radar-image-card');
+              var img = document.createElement('img');
+              img.className = 'radar-card-photo';
+              img.src = item[1]; img.alt = item[2]; img.loading = 'lazy';
+              img.onerror = function(){ this.style.display='none'; };
+              card.insertBefore(img, card.firstChild);
+              card.setAttribute('data-topic', item[2]);
+            });
+          });
+          </script>"""
+                  html = html.replace("</body>", visual_script + "</body>", 1)
               page.write_text(html, encoding="utf-8")
           PY
           cat >> public/styles.css <<'CSS'
+          /* Biblioteca editorial: tarjetas visuales, alegres y diferenciadas */
+          .radar-image-card{overflow:hidden!important;border:1px solid #e8e1d6!important;border-radius:20px!important;background:#fffdf9!important;box-shadow:0 7px 22px rgba(28,45,73,.08)!important;transition:transform .22s ease,box-shadow .22s ease}
+          .radar-image-card:hover{transform:translateY(-5px);box-shadow:0 14px 28px rgba(28,45,73,.14)!important}
+          .radar-card-photo{display:block;width:100%;height:185px;object-fit:cover;background:#f0eee8}
+          .radar-image-card>*:not(.radar-card-photo){position:relative}
+          .radar-image-card{position:relative}
+          .radar-image-card:before{content:"";position:absolute;z-index:1;top:0;left:0;width:7px;height:185px;background:linear-gradient(180deg,#f4b544,#e66d48)}
+          .radar-image-card[data-topic="Audio personal"]:before{background:#e87979}
+          .radar-image-card[data-topic="Oficina y estudio"]:before{background:#6eaa91}
+          .radar-image-card[data-topic="Iluminación"]:before{background:#e9b94e}
+          .radar-image-card[data-topic="Cocina práctica"]:before{background:#e77c50}
+          .radar-image-card[data-topic="Pequeños electrodomésticos"]:before{background:#8c9fd0}
+          .radar-image-card[data-topic="Almacenamiento"]:before{background:#6ba9b4}
+          .radar-image-card[data-topic="Viajes"]:before{background:#d58a65}
+          .radar-image-card[data-topic="Videollamadas"]:before{background:#8d9a72}
+          @media(max-width:650px){.radar-card-photo{height:170px}.radar-image-card:before{height:170px}}
           .brand-logo{display:block;width:230px;height:auto;max-height:78px;object-fit:contain;flex:none}
           .guide-visual{margin:18px 0 28px;border-radius:20px;overflow:hidden;background:#eef2f7;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
           .guide-visual img{display:block;width:100%;height:245px;object-fit:cover;background:#e9edf2;min-width:0}
